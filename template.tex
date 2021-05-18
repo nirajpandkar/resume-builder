@@ -1,0 +1,252 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{latexsym}
+% \usepackage[empty]{fullpage}
+\usepackage{titlesec}
+% \usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[margin = 0.8in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+% \usepackage{wrapfig}
+\usepackage{graphicx}
+
+%--------------UNDERLINING---------------
+% taken from https://alexwlchan.net/2017/10/latex-underlines/
+
+\usepackage{contour}
+\usepackage{ulem}
+
+\renewcommand{\ULdepth}{3.8pt}
+\contourlength{0.8pt}
+
+\newcommand{\myuline}[1]{%
+  \uline{\phantom{#1}}%
+  \llap{\contour{white}{#1}}%
+}
+
+%----------------------------------------
+
+\graphicspath{ {./Images/} }
+
+%----------FONT OPTIONS----------
+\usepackage{fontspec}
+\usepackage{fontawesome5}
+
+% I could have just used the charter package here for the font I wanted...
+% but I'd still need to change compiler to XeLaTeX to include the title font
+% \usepackage{charter}
+
+\setmainfont{XCharter}
+
+\newfontfamily{\basictitle}{basictitlefont}[
+Path = Fonts/,
+Extension = .ttf,
+UprightFont = basictitlefont
+]
+% to use:
+% {\basictitle This text uses the basictitle font}
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\cfoot{\thepage}
+%\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\iffalse
+% \iftrue
+\addtolength{\oddsidemargin}{0.3in}
+\addtolength{\marginparsep}{0.3in}
+\addtolength{\evensidemargin}{0.3in}
+\addtolength{\textwidth}{-0.5in}
+\addtolength{\topmargin}{0.3in}
+\addtolength{\textheight}{0.3in}
+\fi
+
+\urlstyle{same}
+
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+    {\color{gray}\titlerule} \vspace{-5pt}
+    \vspace{8pt}\scshape\raggedright\normalfont
+}{}{0pt}{}
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[6]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} \href{#2}{\myuline{#3}} \href{#4}{\myuline{#5}} & #6 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+{\Huge $name$}
+\end{center}
+
+
+% ----- TOGGLE FOR PHOTO ----
+% \vspace{10pt}
+\centering
+{
+    \href{mailto:niraj.pandkar@gmail.com}{
+    \faEnvelope
+    \thinspace \thinspace
+    \myuline{$email$}} |
+    \href{$linkedin_link$}{
+    \faLinkedin
+    \thinspace \thinspace        
+    \myuline{$linkedin_id$}} |
+    \href{$github_link$}{
+    \faGithub
+    \thinspace \thinspace
+    \myuline{$github_id$}} |
+    \faPhone
+    \thinspace
+    $cell_number$
+}
+
+
+
+%-----------EXPERIENCE-----------
+$if(experience)$
+\section{\textbf{\Large Experience}}
+  
+  \resumeSubHeadingListStart
+    $for(experience)$
+      \resumeSubheading
+        {$experience.position$}{$experience.duration$}
+        {$experience.company_name$}{$experience.extra_info$}
+        \resumeItemListStart
+          $for(experience.description)$
+            \resumeItem{$experience.description$}
+          $endfor$
+        \resumeItemListEnd
+    $endfor$
+  \resumeSubHeadingListEnd
+$endif$
+
+
+%-----------PROGRAMMING SKILLS-----------
+$if(skills)$
+\section{\textbf{\Large Skills}}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+      $for(skills)$
+        \textbf{$skills.category$}
+        {: $for(skills.items)$
+              $skills.items$, 
+           $endfor$} \\
+      $endfor$
+     \textbf{Certifications}{: \href{https://graduation.udacity.com/confirm/TK35K6Q5}{\myuline{Udacity Data Scientist Nanodegree}}, \href{https://drive.google.com/file/d/0B2T5WtDlvNo5bVE5VjlSQ0xscGs/view}{\myuline{Udacity Full Stack Nanodegree}}}
+     }
+     }
+ \end{itemize}
+$endif$
+
+%-----------PERSONAL PROJECTS-----------
+$if(projects)$
+\section{\textbf{\Large Personal Projects}}
+
+    \resumeSubHeadingListStart
+      $for(projects)$
+        \resumeProjectHeading
+          {\textbf{$projects.title$}}{$projects.github_link$}{[Github]}
+          $if(projects.blog_link)$
+            {$projects.blog_link$}{[Blog]}
+          $else$
+            {}{}
+          $endif$
+          {$projects.start_date$}
+          \resumeItemListStart
+            $for(projects.description)$
+              \resumeItem{$projects.description$}
+            $endfor$
+          \resumeItemListEnd
+      $endfor$
+    \resumeSubHeadingListEnd
+$endif$
+
+
+%-----------EDUCATION-----------
+
+$if(education)$
+\section{\textbf{\Large Education}}
+  \resumeSubHeadingListStart
+    $for(education)$
+    \resumeSubheading
+      {$education.degree$}{$education.location$}
+      {$education.university$}{$education.graduation$}
+      \resumeItemListStart
+        $for(education.description)$
+          \resumeItem{$education.description$}
+        $endfor$
+      \resumeItemListEnd
+    $endfor$ 
+  \resumeSubHeadingListEnd
+$endif$
+
+%
+\iffalse
+% \iftrue
+%-----------PROGRAMMING SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Python, C/C++, SQL, JavaScript, HTML/CSS, R} \\
+     \textbf{Frameworks}{: WordPress} \\
+     \textbf{Developer Tools}{: Jupyter Notebooks, Git, Google Cloud Platform, VS Code, Amazon AWS} \\
+     \textbf{Libraries}{: pandas, plotly}
+    }}
+ \end{itemize}
+\fi
+
+%-------------------------------------------
+\end{document}
